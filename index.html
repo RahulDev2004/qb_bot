@@ -104,7 +104,7 @@
         <form>
             <div class="form-group">
                 <label for="message">Message:</label>
-                <input type="text" id="message" style="height: 80px;">
+                <input type="text" name="message" id="message" style="height: 80px;">
             </div>
             <div class="form-group">
                 <label for="exam-name">Exam Name:</label>
@@ -127,7 +127,7 @@
                 <input type="number" id="total-marks">
             </div>
             <div class="form-group">
-                <input type="submit" value="Submit" class="submit-btn">
+                <button type="submit" class="submit-btn">Submit</button>
             </div>
         </form>
         <div id="chat-log" style="max-height: 200px; overflow-y: auto;"></div>
@@ -135,7 +135,7 @@
 
         <script>
 
-            const chatlog = document.getElementById('chat-log');
+            const chatLog = document.getElementById('chat-log');
             const message = document.getElementById('message');
             const form = document.querySelector('form');
             form.addEventListener('submit', (event) => {
@@ -145,10 +145,10 @@
                 const messageElement = document.createElement('div');
                 messageElement.classList.add('message');
                 messageElement.classList.add('message--sent');
-                messageElement.innerHTML = `<p class="message__text">${messageText}</p>`;
-                chatlog.appendChild(messageElement);
-                chatlog.scrollTop = chatlog.scrollHeight;
-                fetch('https://localhost:3000', {
+                // messageElement.innerHTML = `<div class="message__text">${messageText}</div>`;
+                chatLog.appendChild(messageElement);
+                chatLog.scrollTop = chatLog.scrollHeight;
+                fetch('http://localhost:3000', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -162,9 +162,9 @@
                     const messageElement = document.createElement('div');
                     messageElement.classList.add('message');
                     messageElement.classList.add('message--received');
-                    messageElement.innerHTML = `<p class="message__text">${data.completion.content}</p>`;
-                    chatlog.appendChild(messageElement);
-                    chatlog.scrollTop = chatlog.scrollHeight;
+                    messageElement.innerHTML = `<p class="message__text">${data.message.replace(/\n/g, '<br>')}</p>`;
+                    chatLog.appendChild(messageElement);
+                    chatLog.scrollTop = chatLog.scrollHeight;
                 });
             });
         </script>
