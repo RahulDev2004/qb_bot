@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 
 const openai = new OpenAI({
-    apiKey: "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",
+    apiKey: "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",
 });
 
 
@@ -21,7 +21,7 @@ const port = 3000;
     const completion = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
         messages: [
-            {role: "system", content: "You are a assisstant who prepares question for the given syllabus."},
+            {role: "system", content: "You are a assissant who make question paper for the given syllabus. The question paper should have four - 2 mark questions and four - 13 mark questions"},
             {role: "user", content: `${message}`},
         ]
     })
