@@ -130,12 +130,16 @@
                 <button type="submit" class="submit-btn">Submit</button>
             </div>
         </form>
-        <div id="chat-log" style="max-height: 200px; overflow-y: auto;"></div>
+        <div id="chat-log1" style="max-height: 200px; overflow-y: auto;"></div>
+        <div id="chat-log2" style="max-height: 200px; overflow-y: auto;"></div>
+        <div id="chat-log3" style="max-height: 200px; overflow-y: auto;"></div>
         </div>
 
         <script>
 
-            const chatLog = document.getElementById('chat-log');
+            const chatLog1 = document.getElementById('chat-log1');
+            const chatLog2 = document.getElementById('chat-log2');
+            const chatLog3 = document.getElementById('chat-log3');
             const message = document.getElementById('message');
             const form = document.querySelector('form');
             form.addEventListener('submit', (event) => {
@@ -146,8 +150,8 @@
                 messageElement.classList.add('message');
                 messageElement.classList.add('message--sent');
                 // messageElement.innerHTML = `<div class="message__text">${messageText}</div>`;
-                chatLog.appendChild(messageElement);
-                chatLog.scrollTop = chatLog.scrollHeight;
+                chatLog1.appendChild(messageElement);
+                chatLog1.scrollTop = chatLog1.scrollHeight;
                 fetch('http://localhost:3000', {
                     method: 'POST',
                     headers: {
@@ -163,22 +167,48 @@
                     const messageElement = document.createElement('div');
                     messageElement.classList.add('message');
                     messageElement.classList.add('message--received');
-                    messageElement.innerHTML = `<p class="message__text">${data.message.replace(/\n/g, '<br>')}</p>`;
+                    messageElement.innerHTML = `<p class="message__text">${data.message}</p>`;
                     // chatLog.appendChild(messageElement);
-                    chatLog.scrollTop = chatLog.scrollHeight;
+                    chatLog1.scrollTop = chatLog1.scrollHeight;
 
                     // Write message to file
-                    const fileContent = data.message;
-                    const fileName = 'message.txt';
-                    const fileBlob = new Blob([fileContent], { type: 'text/plain' });
-                    const fileUrl = URL.createObjectURL(fileBlob);
+                    const easyfileContent = data.message.easy;
+                    const easyfileName = 'easy.txt';
+                    const easyfileBlob = new Blob([easyfileContent], { type: 'text/plain' });
+                    const easyfileUrl = URL.createObjectURL(easyfileBlob);
+
+                    const mediumfileContent = data.message.medium;
+                    const mediumfileName = 'medium.txt';
+                    const mediumfileBlob = new Blob([mediumfileContent], { type: 'text/plain' });
+                    const mediumfileUrl = URL.createObjectURL(mediumfileBlob);
+
+                    const hardfileContent = data.message.hard;
+                    const hardfileName = 'hard.txt';
+                    const hardfileBlob = new Blob([hardfileContent], { type: 'text/plain' });
+                    const hardfileUrl = URL.createObjectURL(hardfileBlob);
+
 
                     // Create download link
-                    const downloadLink = document.createElement('a');
-                    downloadLink.href = fileUrl;
-                    downloadLink.download = fileName;
-                    downloadLink.innerText = 'Download Question Paper';
-                    chatLog.appendChild(downloadLink);
+                    const easydownloadLink = document.createElement('a');
+                    easydownloadLink.href = easyfileUrl;
+                    easydownloadLink.download = easyfileName;
+                    easydownloadLink.innerText = 'Download Question Paper';
+                    chatLog1.appendChild(easydownloadLink);
+
+                    const mediumdownloadLink = document.createElement('a');
+                    mediumdownloadLink.href = mediumfileUrl;
+                    mediumdownloadLink.download = mediumfileName;
+                    mediumdownloadLink.innerText = 'Download Question Paper';
+                    chatLog2.appendChild(mediumdownloadLink);
+
+                    const harddownloadLink = document.createElement('a');
+                    harddownloadLink.href = hardfileUrl;
+                    harddownloadLink.download = hardfileName;
+                    harddownloadLink.innerText = 'Download Question Paper';
+                    chatLog3.appendChild(harddownloadLink);
+
+                    
+                
                 });
             });
         </script>
